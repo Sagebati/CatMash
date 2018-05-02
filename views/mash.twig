@@ -2,6 +2,22 @@
 
 {% block body %}
     <h1>Who's cutter</h1>
-    {{ cats }}
+    {% for cat in cats %}
+        <img src="{{ cat.url }}" alt="" class="cat-photos">
+    {% endfor %}
 
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        let images = document.getElementsByClassName('cat-photos');
+        let onclick = ()=> {
+            alert(this);
+            alert("clicked");
+        };
+        Array.from(images).forEach(i => {
+            i.addEventListener('click', onclick);
+            console.log(i)
+        })
+    </script>
 {% endblock %}
