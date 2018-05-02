@@ -1,0 +1,13 @@
+{% extends 'layout.twig' %}
+
+
+    {% block body %}
+        <h1>Kittens score</h1>
+        <ul>
+            {% for cat in cats %}
+                <li>{{ cat.url }}</li>
+            {% endfor %}
+        </ul>
+
+    {% endblock %}
+

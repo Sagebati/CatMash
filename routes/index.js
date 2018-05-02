@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/scores', function (req,res,next) {
-   res.render('scores', controller.score_page(res,req))
+    controller.score_page(req,res);
 });
 
 module.exports = router;
