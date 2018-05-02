@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const controller = require('../controller/index');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -7,7 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/scores', function (req,res,next) {
-   res.render('scores', {})
+   res.render('scores', controller.score_page(res,req))
 });
 
 module.exports = router;
