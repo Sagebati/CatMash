@@ -3,21 +3,38 @@
 {% block body %}
     <h1>Who's cutter</h1>
     {% for cat in cats %}
-        <img src="{{ cat.url }}" alt="" class="cat-photos">
+        <img src="{{ cat.url }}" alt="" class="cat-photos" name="{{ cat._id }}" onclick="on_click(this)">
     {% endfor %}
 
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript">
-        let images = document.getElementsByClassName('cat-photos');
-        let onclick = ()=> {
-            alert(this);
-            alert("clicked");
+        let cats = [];
+        cats[0] = "{{ cats[0]._id }}";
+        cats[1] = "{{ cats[1]._id }}";
+        let on_click = (img)=> {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "vote");
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.info("Server response: (new cats) ", this.responseText); //receiving the new cats
+                    let res_cats = JSON.parse(this.responseText);
+                    let images = document.getElementsByClassName("cat-photos");
+                    images[0].src = res_cats[0].url;
+                    cats[0] = images[0].name = res_cats[0]["_id"];
+                    images[1].src = res_cats[1].url;
+                    cats[1] = images[1].name = res_cats[1]["_id"];
+                }else{
+                    console.info("Server Error");
+                    console.info("Status:", this.status);
+                }
+            };
+            const winner = img.getAttribute("name");
+            console.info("Winner");
+            xhttp.send(JSON.stringify({"winner":winner, "looser":cats.filter((it)=> it !== winner )[0]}));
         };
-        Array.from(images).forEach(i => {
-            i.addEventListener('click', onclick);
-            console.log(i)
-        })
+
     </script>
 {% endblock %}

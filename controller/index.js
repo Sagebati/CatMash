@@ -2,7 +2,7 @@ const model = require('../model/model');
 
 
 exports.score_page = (req, res) => {
-    model.CatModel.find({}).sort('score').exec((err, cats) => {
+    model.CatModel.find({}).sort({"score":-1}).exec((err, cats) => {
         if (err) {
             console.error("Error fetching kittens on the db", err);
         } else {
@@ -23,8 +23,9 @@ exports.mash_page = (req, res) => {
                 rnd2 = Math.floor(Math.random() * count);
             } while (rnd === rnd2);
             let pro_cats = [];
-            pro_cats[0] = model.CatModel.findOne().skip(rnd).exec();
-            pro_cats[1] = model.CatModel.findOne().skip(rnd2).exec();
+            const columns = [];
+            pro_cats[0] = model.CatModel.findOne({}, columns).skip(rnd).exec();
+            pro_cats[1] = model.CatModel.findOne({}, columns).skip(rnd2).exec();
 
             Promise.all(pro_cats).then(
                 cats => {

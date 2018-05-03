@@ -5,7 +5,7 @@
         <h1>Kittens score</h1>
         <ul>
             {% for cat in cats %}
-                <li>{{ cat.url }}</li>
+                <li><img src="{{ cat.url }}" alt=""> score: {{ cat.score }}</li>
             {% endfor %}
         </ul>
 
