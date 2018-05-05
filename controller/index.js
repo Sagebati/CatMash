@@ -1,6 +1,10 @@
 const model = require('../model/model');
 
-
+/**
+ * controller for the /score page
+ * @param req http req
+ * @param res http res
+ */
 exports.score_page = (req, res) => {
     model.CatModel.find({}).sort({"score":-1}).exec((err, cats) => {
         if (err) {
@@ -10,7 +14,11 @@ exports.score_page = (req, res) => {
         }
     });
 };
-
+/**
+ * controller for the mash page
+ * @param req http request
+ * @param res http res
+ */
 exports.mash_page = (req, res) => {
     model.CatModel.count((err, count) => {
         if (err) {

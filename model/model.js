@@ -8,6 +8,9 @@ mongoose.connect('mongodb://localhost/cat_mash').then(
 
 let Schema = mongoose.Schema;
 
+/**
+ * cat schema that will be needed in the application
+ */
 let cat = new Schema({
     score: Number,
     url: String,

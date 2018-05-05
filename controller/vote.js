@@ -2,7 +2,15 @@ const Elo = require('elo-js'); // Using Elo ladder for notation like in the movi
 const model = require('../model/model');
 
 
-exports.vote_handle = (req,res) => {
+/**
+ * Controller who handle the /vote route called by an ajax call on /mash
+ * it receives the winner and the looser of the contest of cat and
+ * then recalculate their elo.
+ * Then he sends to the ajax two news random images for more contest
+ * @param req http req
+ * @param res http res
+ */
+exports.vote_handle = (req, res) => {
     const elo = new Elo();
     console.log(req.body);
     let cat_prom = [];
@@ -17,7 +25,9 @@ exports.vote_handle = (req,res) => {
         console.info("New scores W/L", score_w, score_l);
         cats[0].score = score_w;
         cats[1].score = score_l;
-        cats.forEach(c=>c.save(err =>{if (err) console.error(err)})); // Saving new scores;
+        cats.forEach(c => c.save(err => {
+            if (err) console.error(err)
+        })); // Saving new scores;
 
         model.CatModel.count((err, count) => {
             if (err) {
