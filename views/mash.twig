@@ -1,23 +1,32 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-    <h1>Who's cutter</h1>
-    {% for cat in cats %}
-        <img src="{{ cat.url }}" alt="" class="cat-photos" name="{{ cat._id }}" onclick="on_click(this)">
-    {% endfor %}
-
+    {% block title %}{{ parent() }}{% endblock %}
+    <h2 class="h2 title text-center">Who's cuter</h2>
+    <div class="photos">
+        <div class="container">
+            <div class="row row2">
+                {% for cat in cats %}
+                    <div class="col">
+                        <img src="{{ cat.url }}" alt="" class="crop img-fluid rounded cat-photos" name="{{ cat._id }}"
+                             onclick="on_click(this)">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript">
         let cats = [];
-        cats[0] = "{{ cats[0]._id }}";
-        cats[1] = "{{ cats[1]._id }}";
-        let on_click = (img)=> {
+        cats[0] = get_cats()[0].name;
+        cats[1] = get_cats()[1].name;
+        let on_click = (img) => {
             const xhttp = new XMLHttpRequest();
             xhttp.open("POST", "vote");
             xhttp.setRequestHeader("Content-type", "application/json");
-            xhttp.onreadystatechange = function() {
+            xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     console.info("Server response: (new cats) ", this.responseText); //receiving the new cats
                     let res_cats = JSON.parse(this.responseText);
@@ -26,15 +35,26 @@
                     cats[0] = images[0].name = res_cats[0]["_id"];
                     images[1].src = res_cats[1].url;
                     cats[1] = images[1].name = res_cats[1]["_id"];
-                }else{
+                } else {
                     console.info("Server Error");
                     console.info("Status:", this.status);
                 }
             };
             const winner = img.getAttribute("name");
             console.info("Winner");
-            xhttp.send(JSON.stringify({"winner":winner, "looser":cats.filter((it)=> it !== winner )[0]}));
+            xhttp.send(JSON.stringify({"winner": winner, "looser": cats.filter((it) => it !== winner)[0]}));
         };
 
+        function get_cats() {
+            return document.getElementsByClassName("cat-photos")
+        }
+
+        function add_floating_to_images() {
+            let cats = get_cats();
+            cats[0].addClass("float-left");
+            cats[1].addClass("float-right");
+        }
+
+        add_floating_to_images();
     </script>
 {% endblock %}
