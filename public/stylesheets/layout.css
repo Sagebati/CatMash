@@ -43,3 +43,8 @@ a {
     line-height: 2rem;
     background-color: #343a40;
 }
+
+.row-image-score {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}

@@ -3,10 +3,10 @@
         {%  block title %}{{ parent() }}{% endblock %}
         <h2 class="h2 text-center">Kittens score</h2>
         <div class="container">
-            <ol class="list-group list-group-flush">
+            <ul style="list-style-type: none">
                 {% for cat in cats %}
-                    <li class="list-group-item">
-                        <div class="row">
+                    <li>
+                        <div class="row row-image-score">
                             <div class="col-xs-1">
                                 <span class="align-middle index">{{ loop.index }}</span>
                             </div>
@@ -19,7 +19,7 @@
                         </div>
                     </li>
                 {% endfor %}
-            </ol>
+            </ul>
         </div>
 
     {% endblock %}
