@@ -5,7 +5,7 @@ const vote_cont = require('../controller/vote');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('index', {title: 'Express'});
+    res.redirect("/mash");
 });
 
 router.get('/scores', (req, res, next) => {

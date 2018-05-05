@@ -22,7 +22,7 @@
         let cats = [];
         cats[0] = get_cats()[0].name;
         cats[1] = get_cats()[1].name;
-        let on_click = (img) => {
+         function on_click(img){
             const xhttp = new XMLHttpRequest();
             xhttp.open("POST", "vote");
             xhttp.setRequestHeader("Content-type", "application/json");
